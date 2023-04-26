@@ -28,7 +28,7 @@ router.get("/getAll", async (req, res, next) => {
 
 router.delete("/remove/:id", async (req, res, next) => {
   try {
-    const deleteCat = await catModel.deleteOne(req.body);
+    const deleteCat = await catModel.findByIdAndDelete(req.params.id);
     res.status(201).json(deleteCat);
   } catch (err) {
     return next({
@@ -42,7 +42,8 @@ router.patch("/update/:id", async (req, res, next) => {
   try {
     const updateCat = await catModel.findByIdAndUpdate(
       req.params.id,
-      req.query
+      req.query,
+      { returnDocument: "after" }
     );
     res.status(201).json(updateCat);
   } catch (err) {

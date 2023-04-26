@@ -13,7 +13,7 @@ describe("API Tests", function () {
     await catModel.deleteMany({});
     testCat = await catModel.create({
       name: "Sergent paws",
-      colour: "Cat brown",
+      colour: "brown",
       evil: false,
     });
     testCat = JSON.parse(JSON.stringify(testCat));
@@ -35,9 +35,6 @@ describe("API Tests", function () {
         done();
       });
   });
-  after(async () => {
-    await mongoose.disconnect();
-  });
 
   it("Show all cats", (done) => {
     chai
@@ -49,20 +46,36 @@ describe("API Tests", function () {
         done();
       });
   });
-  after(async () => {
-    await mongoose.disconnect();
-  });
 
-  it("Deletes cat", (done) => {
+  it("should delete a cat", (done) => {
     chai
       .request(server)
-      .delete("/cats/remove/testCat._id")
+      .delete("/cats/remove/" + testCat._id)
+      .send()
       .end((err, res) => {
         chai.expect(err).to.be.null;
-        chai.expect(testCat._id).to.deep.include(testCat._id);
+        chai.expect(res.body).to.deep.include(testCat);
+        chai.expect(res.status).to.equal(201);
         done();
       });
   });
+
+  it("should update a cat", (done) => {
+    chai
+      .request(server)
+      .patch("/cats/update/" + testCat._id + "?name=Captain_paws")
+      .query()
+      .end((err, res) => {
+        chai.expect(res.body).to.deep.include({
+          name: "Captain_paws",
+          colour: "brown",
+          evil: false,
+        });
+        chai.expect(res.status).to.equal(201);
+        done();
+      });
+  });
+
   after(async () => {
     await mongoose.disconnect();
   });

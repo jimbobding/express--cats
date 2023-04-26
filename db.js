@@ -10,6 +10,8 @@ const catModel = mongoose.model("cat", catSchema);
 
 mongoose
   .connect("mongodb+srv://jdavid:jimmy123@cluster0.ikbaof7.mongodb.net/test")
+  //SeanDB
+  // .connect("mongodb+srv://sh:root@cluster0.x3otjr7.mongodb.net/test")
   .then(() => {
     console.log("yay");
   })
