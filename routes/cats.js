@@ -1,5 +1,4 @@
 const router = require("express").Router();
-
 const { get } = require("http");
 const { catModel } = require("../db");
 

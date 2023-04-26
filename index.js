@@ -13,7 +13,7 @@ const logger = (req, res, next) => {
 };
 
 //Will always run
-app.use(logger);
+// app.use(logger);
 
 const catRoutes = require("./routes/cats");
 //Handling the response parsing request to json // Recieves a JS string and convert to java object
@@ -30,3 +30,5 @@ const server = app.listen(4494, () => {
     `Server started succesfully on port number${server.address().port}`
   );
 });
+
+module.exports = server;
